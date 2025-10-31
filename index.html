@@ -53,12 +53,53 @@
     @keyframes blink {
       50% { border-color: transparent; }
     }
-    .about-img {
-      max-width: 380px;
-      border-radius: 60%;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      
-    }
+ /* ABOUT SECTION IMAGE */
+.about-img {
+  max-width: 380px;
+  border-radius: 20px;
+  border: 3px solid #007bff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: transform 0.8s ease, opacity 0.8s ease;
+}
+
+.about-img.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about-img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* ABOUT SECTION TEXT */
+.about-text {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: transform 0.8s ease, opacity 0.8s ease;
+}
+
+.about-text.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.about-text p {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.6;
+}
+
+.about-text .btn {
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 10px 20px;
+}
+
+
+
     .progress {
       height: 40px;
       border-radius: 10px;
@@ -140,31 +181,75 @@
     );
 
     // About
-    const About = () => (
-      <section id="about" className="container my-5">
-        <div className="row align-items-center">
-          <div className="col-md-6 text-center">
-            <img src="./public/images/Profile.jpg" alt="Nehru" className="about-img" />
-          </div>
-          <div className="col-md-6">
-            <h2>About Me</h2>
-            <p>
-              I am a passionate UI Full Stack Developer skilled in building responsive web
-              applications using React, Node.js, Express, and MongoDB. I love creating
-              clean UI and scalable backend systems.
-            </p>
-             <a 
-                className="btn btn-outline-warning ms-2" 
-                href="./public/pdf/Nehru_Resume.pdf"   
-                target="_blank"     
-                rel="noopener noreferrer"
-              >
-                <i className="fa-solid fa-file"></i> Resume
-             </a>
+    // 🔹 ABOUT SECTION
+const About = () => {
+  React.useEffect(() => {
+    const img = document.querySelector(".about-img");
+    const text = document.querySelector(".about-text");
+
+    const handleScroll = () => {
+      const imgRect = img.getBoundingClientRect();
+      const textRect = text.getBoundingClientRect();
+
+      if (imgRect.top < window.innerHeight - 100) {
+        img.classList.add("show");
+      }
+      if (textRect.top < window.innerHeight - 100) {
+        text.classList.add("show");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <section id="about" className="container my-5">
+      <h2 className="text-center mb-4">About Me</h2>
+      <div className="row align-items-center">
+        <div className="col-md-6 text-center">
+          <img
+            src="./public/images/Profile.jpeg"
+            alt="Nehru"
+            className="about-img"
+          />
+        </div>
+
+        <div className="col-md-6 about-text">
+          <p>
+            I am a passionate <strong>UI Full Stack Developer</strong> skilled in building responsive
+            web applications using React, Node.js, Express, and MongoDB. I love
+            creating clean UIs and scalable backend systems that deliver
+            real-world impact.
+          </p>
+          <p>
+            With a strong foundation in frontend & backend technologies, I focus
+            on delivering performant, accessible, and visually stunning
+            applications.
+          </p>
+
+          <div className="d-flex gap-3 mt-3">
+            <a href="#contact" className="btn btn-primary">
+              <i className="fa-solid fa-paper-plane"></i> Hire Me
+            </a>
+            <a
+              href="resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-outline-primary"
+            >
+              <i className="fa-solid fa-file"></i> View Resume
+            </a>
           </div>
         </div>
-      </section>
-    );
+      </div>
+    </section>
+  );
+};
+
+
+    
 
     // Skills with Progress Bars
     // Skills
@@ -209,52 +294,96 @@ const Skills = () => (
     </div>
   </section>
 );
-
-
-    // Projects
-    const projects = [
-      {
-        icon: "fa-list-check",
-        title: "To-Do App",
-        desc: "CRUD operations with React & MongoDB.",
-        link: "https://github.com/Nehru442/To-Do",
-        color: "primary"
-      },
-      {
-        icon: "fa-video",
-        title: "Video Library",
-        desc: "React + Node.js + Express + MongoDB project with Admin & User dashboards.",
-        link: "#",
-        color: "danger"
-      },
-     {
+   
+// 🔹 Project Data
+const projects = [
+  {
+    icon: "fa-store",
+    title: "E-Commerce Web App",
+    desc: "Full-Stack MERN e-commerce app with product management, cart, and checkout.",
+    link: "https://github.com/Nehru442/E-Commerce",
+    color: "info",
+    category: "Full Stack"
+  },
+  {
+    icon: "fa-list-check",
+    title: "To-Do App",
+    desc: "CRUD operations with React & MongoDB.",
+    link: "https://github.com/Nehru442/To-Do",
+    color: "primary",
+    category: "Frontend"
+  },
+  {
+    icon: "fa-video",
+    title: "Video Library",
+    desc: "React + Node.js + Express + MongoDB project with Admin & User dashboards.",
+    link: "https://github.com/Nehru442/UI-Mini-Project.git",
+    color: "danger",
+    category: "Full Stack"
+  },
+  
+  {
     icon: "fa-gamepad",
     title: "XOXO Game (Tic-Tac-Toe)",
     desc: "Two-player Tic-Tac-Toe built in Python with win/draw logic & replay.",
     link: "https://github.com/Nehru442/Python.Demo.git",
-    color: "warning"
-      }
-    ];
+    color: "warning",
+    category: "Python"
+  }
+];
 
-    const Projects = () => (
-      <section id="projects" className="container my-5">
-        <h2 className="text-center mb-4">Projects</h2>
-        <div className="row g-4">
-          {projects.map((p, i) => (
-            <div className="col-md-4" key={i}>
-              <div className="card p-3 text-center">
-                <i className={`fa-solid ${p.icon} fa-2x mb-3 text-${p.color}`}></i>
-                <h5>{p.title}</h5>
-                <p>{p.desc}</p>
-                <a href={p.link} target="_blank" className={`btn btn-outline-${p.color} btn-sm`}>
-                  {p.link.includes("github") ? "GitHub" : "Live Demo"}
-                </a>
-              </div>
+// 🔹 Projects Component with Filter
+const Projects = () => {
+  const [activeFilter, setActiveFilter] = React.useState("All");
+
+  const filteredProjects = activeFilter === "All"
+    ? projects
+    : projects.filter((p) => p.category === activeFilter);
+
+  const filters = ["All", "Full Stack", "Frontend", "Python"];
+
+  return (
+    <section id="projects" className="container my-5">
+      <h2 className="text-center mb-4">Projects</h2>
+
+      {/* Filter Buttons */}
+      <div className="text-center mb-4">
+        {filters.map((f) => (
+          <button
+            key={f}
+            className={`btn btn-sm mx-2 ${
+              activeFilter === f ? "btn-primary" : "btn-outline-primary"
+            }`}
+            onClick={() => setActiveFilter(f)}
+          >
+            {f}
+          </button>
+        ))}
+      </div>
+
+      {/* Project Cards */}
+      <div className="row g-4">
+        {filteredProjects.map((p, i) => (
+          <div className="col-md-4" key={i}>
+            <div className="card p-3 text-center shadow-sm h-100">
+              <i className={`fa-solid ${p.icon} fa-2x mb-3 text-${p.color}`}></i>
+              <h5>{p.title}</h5>
+              <p>{p.desc}</p>
+              <a
+                href={p.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`btn btn-outline-${p.color} btn-sm`}
+              >
+                {p.link.includes("github") ? "GitHub" : "Live Demo"}
+              </a>
             </div>
-          ))}
-        </div>
-      </section>
-    );
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
 
     // Contact
    
