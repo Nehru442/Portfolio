@@ -329,6 +329,14 @@ const projects = [
     link: "https://github.com/Nehru442/Python.Demo.git",
     color: "warning",
     category: "Python"
+  },
+  {
+    icon: "fa-pizza-slice",
+    title: "PORTFOlIO",
+    desc: "Portfolio  using React",
+    link: "https://portfolionehru.netlify.app",
+    color: "warning",
+    category: "Frontend"
   }
 ];
 
@@ -375,7 +383,7 @@ const Projects = () => {
                 rel="noopener noreferrer"
                 className={`btn btn-outline-${p.color} btn-sm`}
               >
-                {p.link.includes("github") ? "GitHub" : "Live Demo"}
+                {p.link.includes("github ") ? "GitHub" : "Live Demo"}
               </a>
             </div>
           </div>
@@ -400,6 +408,7 @@ const Projects = () => {
         <a href="https://github.com/Nehru442" target="_blank" rel="noopener noreferrer">
             <i className="fa-brands fa-github fa-2x text-dark"></i>
         </a>
+        
         </div>
     </section>
     );
